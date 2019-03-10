@@ -16,7 +16,7 @@
 #include <libgen.h>
 #include <signal.h>
 #include <stdlib.h>
-#include <string.h>
+#include <bsd/string.h>
 #include <unistd.h>
 #include <errno.h>
 #include <float.h>
@@ -87,7 +87,7 @@ static int parse_feeds(xmlNodePtr node, struct fast_book_set *set, const char *t
 			goto fail;
 		}
 
-		strncpy(feed->xml, template, sizeof(feed->xml));
+		strlcpy(feed->xml, template, sizeof(feed->xml));
 
 		ptr = node->xmlChildrenNode;
 		while (ptr != NULL) {
@@ -101,13 +101,13 @@ static int parse_feeds(xmlNodePtr node, struct fast_book_set *set, const char *t
 			if (!xmlStrcmp(ptr->name, (const xmlChar *)"port")) {
 				feed->port = atoi((const char *)prop);
 			} else if (!xmlStrcmp(ptr->name, (const xmlChar *)"ip")) {
-				strncpy(feed->ip, (const char *)prop, sizeof(feed->ip));
+				strlcpy(feed->ip, (const char *)prop, sizeof(feed->ip));
 			} else if (!xmlStrcmp(ptr->name, (const xmlChar *)"lip")) {
-				strncpy(feed->lip, (const char *)prop, sizeof(feed->lip));
+				strlcpy(feed->lip, (const char *)prop, sizeof(feed->lip));
 			} else if (!xmlStrcmp(ptr->name, (const xmlChar *)"sip")) {
-				strncpy(feed->sip, (const char *)prop, sizeof(feed->sip));
+				strlcpy(feed->sip, (const char *)prop, sizeof(feed->sip));
 			} else if (!xmlStrcmp(ptr->name, (const xmlChar *)"file")) {
-				strncpy(feed->file, (const char *)prop, sizeof(feed->file));
+				strlcpy(feed->file, (const char *)prop, sizeof(feed->file));
 			} else if (!xmlStrcmp(ptr->name, (const xmlChar *)"reset")) {
 				feed->cfg.reset = true;
 			} else if (!xmlStrcmp(ptr->name, (const xmlChar *)"preamble")) {
@@ -152,7 +152,7 @@ static int parse_books(xmlNodePtr node, struct fast_book_set *set)
 		if (!prop)
 			goto fail;
 
-		strncpy(book->symbol, (const char *)prop, sizeof(book->symbol));
+		strlcpy(book->symbol, (const char *)prop, sizeof(book->symbol));
 
 		ptr = node->xmlChildrenNode;
 		while (ptr != NULL) {
@@ -172,7 +172,7 @@ static int parse_books(xmlNodePtr node, struct fast_book_set *set)
 			else if (!xmlStrcmp(ptr->name, (const xmlChar *)"tick_exp"))
 				book->tick.exp = atoi((const char *)prop);
 			else if (!xmlStrcmp(ptr->name, (const xmlChar *)"session"))
-				strncpy(book->session, (const char *)prop, sizeof(book->session));
+				strlcpy(book->session, (const char *)prop, sizeof(book->session));
 
 			ptr = ptr->next;
 		}
@@ -586,8 +586,8 @@ int main(int argc, char *argv[])
 	if (!mode || !sender_comp_id || !target_comp_id || !host || !port || !template || !config)
 		usage();
 
-	strncpy(cfg.target_comp_id, target_comp_id, ARRAY_SIZE(cfg.target_comp_id));
-	strncpy(cfg.sender_comp_id, sender_comp_id, ARRAY_SIZE(cfg.sender_comp_id));
+	strlcpy(cfg.target_comp_id, target_comp_id, ARRAY_SIZE(cfg.target_comp_id));
+	strlcpy(cfg.sender_comp_id, sender_comp_id, ARRAY_SIZE(cfg.sender_comp_id));
 	cfg.dialect = &fix_dialects[FIX_4_4];
 
 	he = gethostbyname(host);

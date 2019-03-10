@@ -10,7 +10,7 @@
 #include <sys/types.h>
 #include <libgen.h>
 #include <stdlib.h>
-#include <string.h>
+#include <bsd/string.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
@@ -353,15 +353,15 @@ int main(int argc, char *argv[])
 	cfg.dialect	= &fix_dialects[version];
 
 	if (!sender_comp_id) {
-		strncpy(cfg.sender_comp_id, "SELLSIDE", ARRAY_SIZE(cfg.sender_comp_id));
+		strlcpy(cfg.sender_comp_id, "SELLSIDE", ARRAY_SIZE(cfg.sender_comp_id));
 	} else {
-		strncpy(cfg.sender_comp_id, sender_comp_id, ARRAY_SIZE(cfg.sender_comp_id));
+		strlcpy(cfg.sender_comp_id, sender_comp_id, ARRAY_SIZE(cfg.sender_comp_id));
 	}
 
 	if (!target_comp_id) {
-		strncpy(cfg.target_comp_id, "BUYSIDE", ARRAY_SIZE(cfg.target_comp_id));
+		strlcpy(cfg.target_comp_id, "BUYSIDE", ARRAY_SIZE(cfg.target_comp_id));
 	} else {
-		strncpy(cfg.target_comp_id, target_comp_id, ARRAY_SIZE(cfg.target_comp_id));
+		strlcpy(cfg.target_comp_id, target_comp_id, ARRAY_SIZE(cfg.target_comp_id));
 	}
 
 	sockfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);

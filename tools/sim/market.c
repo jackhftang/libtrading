@@ -15,6 +15,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <math.h>
+#include <bsd/string.h>
 
 #define	EPOLL_MAXEVENTS	100
 
@@ -93,7 +94,7 @@ static int do_income(struct market *market, int sockfd)
 		if (!field)
 			goto logout;
 
-		strncpy(trader->name, field->string_value, 32);
+		strlcpy(trader->name, field->string_value, 32);
 
 		trader->active = true;
 

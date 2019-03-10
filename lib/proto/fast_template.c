@@ -3,7 +3,7 @@
 
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
-#include <string.h>
+#include <bsd/string.h>
 #include <ctype.h>
 
 static int fast_field_init(xmlNodePtr node, struct fast_field *field);
@@ -48,7 +48,7 @@ static int fast_misc_init(xmlNodePtr node, struct fast_field *field)
 
 	prop = xmlGetProp(node, (const xmlChar *)"name");
 	if (prop != NULL)
-		strncpy(field->name, (const char *)prop, sizeof(field->name));
+		strlcpy(field->name, (const char *)prop, sizeof(field->name));
 
 	xmlFree(prop);
 
@@ -465,9 +465,9 @@ static int fast_message_init(xmlNodePtr node, struct fast_message *msg)
 
 	prop = xmlGetProp(node, (const xmlChar *)"name");
 	if (prop != NULL)
-		strncpy(msg->name, (const char *)prop, sizeof(msg->name));
+		strlcpy(msg->name, (const char *)prop, sizeof(msg->name));
 	else
-		strncpy(msg->name, (const char *)"", sizeof(msg->name));
+		strlcpy(msg->name, (const char *)"", sizeof(msg->name));
 	xmlFree(prop);
 
 	prop = xmlGetProp(node, (const xmlChar *)"reset");

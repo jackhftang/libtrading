@@ -7,7 +7,7 @@
 #include <sys/time.h>
 #include <assert.h>
 #include <stdlib.h>
-#include <string.h>
+#include <bsd/string.h>
 #include <stdio.h>
 
 static const char *begin_strings[] = {
@@ -36,8 +36,8 @@ struct fix_session_cfg *fix_session_cfg_new(
 
 	cfg = calloc(1, sizeof(struct fix_session_cfg));
 
-	strncpy(cfg->sender_comp_id, sender_comp_id, sizeof(cfg->sender_comp_id));
-	strncpy(cfg->target_comp_id, target_comp_id, sizeof(cfg->target_comp_id));
+	strlcpy(cfg->sender_comp_id, sender_comp_id, sizeof(cfg->sender_comp_id));
+	strlcpy(cfg->target_comp_id, target_comp_id, sizeof(cfg->target_comp_id));
 
 	cfg->heartbtint = heartbtint;
 

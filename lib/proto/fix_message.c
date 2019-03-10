@@ -14,7 +14,7 @@
 #include <sys/uio.h>
 #include <assert.h>
 #include <stdlib.h>
-#include <string.h>
+#include <bsd/string.h>
 #include <unistd.h>
 #include <errno.h>
 #include <stdio.h>
@@ -524,7 +524,7 @@ const char *fix_get_string(struct fix_field *field, char *buffer, unsigned long 
 	if (len < count)
 		return NULL;
 
-	strncpy(buffer, start, count);
+	strlcpy(buffer, start, count);
 
 	buffer[count] = '\0';
 
@@ -649,7 +649,7 @@ void fix_message_unparse(struct fix_message *self)
 
 	TRACE(LIBTRADING_FIX_MESSAGE_UNPARSE(self));
 
-	strncpy(buf, self->str_now, sizeof(buf));
+	strlcpy(buf, self->str_now, sizeof(buf)-1);
 
 	/* standard header */
 	msg_type	= (self->type != FIX_MSG_TYPE_UNKNOWN) ?

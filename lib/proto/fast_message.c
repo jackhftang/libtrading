@@ -4,7 +4,7 @@
 #include "libtrading/array.h"
 
 #include <sys/socket.h>
-#include <string.h>
+#include <bsd/string.h>
 #include <stdlib.h>
 
 static int parse_uint(struct buffer *buffer, u64 *value)
@@ -841,7 +841,7 @@ static int fast_decode_ascii(struct buffer *buffer, struct fast_pmap *pmap, stru
 					goto fail;
 				}
 
-				strncpy(base + lenb - length, delta, lend + 1);
+				strlcpy(base + lenb - length, delta, lend + 1);
 			} else {
 				length = -(length + 1);
 
@@ -857,7 +857,7 @@ static int fast_decode_ascii(struct buffer *buffer, struct fast_pmap *pmap, stru
 				}
 
 				memmove(base + lend, base + length, lenb - length + 1);
-				strncpy(base, delta, lend);
+				strlcpy(base, delta, lend);
 			}
 
 			break;

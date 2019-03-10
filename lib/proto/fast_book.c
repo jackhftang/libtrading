@@ -2,6 +2,7 @@
 #include "libtrading/proto/fast_book.h"
 
 #include <stdlib.h>
+#include <bsd/string.h>
 
 static int decimal_to_int(struct fast_decimal *decimal, i64 *out)
 {

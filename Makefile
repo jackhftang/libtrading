@@ -54,6 +54,8 @@ EXTRA_WARNINGS += -Wmissing-prototypes
 EXTRA_WARNINGS += -Wnested-externs
 EXTRA_WARNINGS += -Wold-style-definition
 EXTRA_WARNINGS += -Wstrict-prototypes
+EXTRA_WARNINGS += -Wno-format-truncation
+
 
 # Compile flags
 CFLAGS		:= -I$(CURDIR)/include -Wall $(EXTRA_WARNINGS) $(CFLAGS_WERROR) -g -O3 -std=gnu99 -fPIC
@@ -93,12 +95,10 @@ INCLUDES += -Itools/include
 
 EXTRA_LIBS += $(shell sh -c 'pkg-config --libs libxml-2.0')
 EXTRA_LIBS += $(shell sh -c 'pkg-config --libs glib-2.0')
-
 EXTRA_LIBS += -lz
-
 EXTRA_LIBS += -levent
-
 EXTRA_LIBS += -lncurses
+EXTRA_LIBS += -lbsd
 
 ifeq ($(uname_S),Linux)
 	DEFINES += -D_GNU_SOURCE
